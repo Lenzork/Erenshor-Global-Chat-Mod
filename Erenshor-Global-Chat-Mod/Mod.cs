@@ -19,6 +19,7 @@ namespace Erenshor_Global_Chat_Mod
         private static NetPeer _serverPeer;
         private EventBasedNetListener _listener;
         private static string steamUsername;
+        private const string SERVER_IP = "127.0.0.1"; // Enter the IP of the global chat server here
 
         private static string[] ValidScenes = new string[]
         {
@@ -246,7 +247,7 @@ namespace Erenshor_Global_Chat_Mod
 
             // Client starten  
             _netManager.Start();
-            _serverPeer = _netManager.Connect("127.0.0.1", 9050, "ErenshorGlobalChat"); // Beispiel-Serveradresse  
+            _serverPeer = _netManager.Connect(SERVER_IP, 9050, "ErenshorGlobalChat"); // Beispiel-Serveradresse  
 
             int attemps = 0;
 
