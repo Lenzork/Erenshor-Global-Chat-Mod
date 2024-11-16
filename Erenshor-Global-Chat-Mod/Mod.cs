@@ -87,7 +87,6 @@ namespace Erenshor_Global_Chat_Mod
         {
             // Daten vom Server empfangen
             string message = reader.GetString();
-            MelonLogger.Msg($"Nachricht vom Server: {message}");
 
             // Beispiel: Spielerposition aktualisieren
             var data = JsonConvert.DeserializeObject<PackageData>(message);
