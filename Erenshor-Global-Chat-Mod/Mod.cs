@@ -18,7 +18,7 @@ namespace Erenshor_Global_Chat_Mod
         private NetManager _netManager;
         private static NetPeer _serverPeer;
         private EventBasedNetListener _listener;
-        private string steamUsername;
+        private static string steamUsername;
 
         private static string[] ValidScenes = new string[]
         {
@@ -115,7 +115,7 @@ namespace Erenshor_Global_Chat_Mod
             }
         }
 
-        public void SendChatMessageToGlobalServer(string message)
+        public static void SendChatMessageToGlobalServer(string message)
         {
             if(_serverPeer == null)
             {
@@ -131,7 +131,7 @@ namespace Erenshor_Global_Chat_Mod
             }
 
             MelonLogger.Msg($"Sending message: {message}");
-            UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {GetSteamUsername()}: {message}");
+            UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {Mod.GetSteamUsername()}: {message}");
 
             var writer = new NetDataWriter();
             var settings = new JsonSerializerSettings();
@@ -139,7 +139,7 @@ namespace Erenshor_Global_Chat_Mod
 
             PackageData data = new PackageData
             {
-                SenderName = steamUsername,
+                SenderName = GetSteamUsername(),
                 Message = message
             };
 
@@ -174,7 +174,7 @@ namespace Erenshor_Global_Chat_Mod
             public string Message;
         }
 
-        public string GetSteamUsername()
+        public static string GetSteamUsername()
         {
             return steamUsername;
         }
