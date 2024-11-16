@@ -18,7 +18,7 @@ namespace Erenshor_Global_Chat_Mod
         private NetManager _netManager;
         private static NetPeer _serverPeer;
         private EventBasedNetListener _listener;
-        private static string steamUsername;
+        private string steamUsername;
 
         private static string[] ValidScenes = new string[]
         {
@@ -81,6 +81,14 @@ namespace Erenshor_Global_Chat_Mod
 
             // Netzwerkevents verarbeiten
             _netManager.PollEvents();
+
+            // Verbindung zum Server überprüfen
+            if (_serverPeer.ConnectionState == ConnectionState.Disconnected)
+            {
+                MelonLogger.Error("Lost connection to the Global Chat Server.");
+                UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> Lost connection to the Global Chat Server.");
+                _serverPeer = null;
+            }
         }
 
         private void OnNetworkReceive(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod)
@@ -107,13 +115,23 @@ namespace Erenshor_Global_Chat_Mod
             }
         }
 
-        public static void SendChatMessageToGlobalServer(string message)
+        public void SendChatMessageToGlobalServer(string message)
         {
             if(_serverPeer == null)
             {
                 MelonLogger.Error("No connection to the Global Chat Server. Couldn't send message.");
                 return;
             }
+
+            if(message.Length > 255)
+            {
+                MelonLogger.Error("Message is too long. Couldn't send message.");
+                UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> Message is too long. Couldn't send message.");
+                return;
+            }
+
+            MelonLogger.Msg($"Sending message: {message}");
+            UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {GetSteamUsername()}: {message}");
 
             var writer = new NetDataWriter();
             var settings = new JsonSerializerSettings();
@@ -156,7 +174,7 @@ namespace Erenshor_Global_Chat_Mod
             public string Message;
         }
 
-        public static string GetSteamUsername()
+        public string GetSteamUsername()
         {
             return steamUsername;
         }

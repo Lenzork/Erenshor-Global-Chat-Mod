@@ -22,8 +22,6 @@ namespace Erenshor_Global_Chat_Mod
                 if (text[0] == '@')
                 {
                     string message = text.Substring(1);
-                    MelonLogger.Msg($"Sending message: {message}");
-                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {Mod.GetSteamUsername()}: {message}");
                     Mod.SendChatMessageToGlobalServer(message);
 
                     // Reset Player UI
