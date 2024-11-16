@@ -57,6 +57,13 @@ namespace Erenshor_Global_Chat_Mod
 
         public override void OnLateInitializeMelon()
         {
+            // Überprüfen, ob Steam aktiv ist
+            if (!SteamManager.Initialized)
+            {
+                MelonLogger.Error("Steam is not initialized. The Global Chat Mod requires Steam to be running.");
+                return;
+            }
+
             steamUsername = SteamFriends.GetPersonaName();
             MelonLogger.Msg($"Using {steamUsername} as name for the global chat.");
         }
