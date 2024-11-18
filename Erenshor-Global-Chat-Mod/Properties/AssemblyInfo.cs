@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using MelonLoader;
 using Erenshor_Global_Chat_Mod;
 
-[assembly: MelonInfo(typeof(Mod), "Erenshor Global Chat Mod", "1.0.0", "Erenshor")]
+[assembly: MelonInfo(typeof(Mod), "Erenshor Global Chat Mod", "2.0.0", "Lenzork")]
 [assembly: MelonGame("Burgee Media", "Erenshor")]
 [assembly: MelonColor(System.ConsoleColor.DarkMagenta)]
 

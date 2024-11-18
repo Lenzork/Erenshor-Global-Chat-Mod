@@ -22,7 +22,7 @@ namespace Erenshor_Global_Chat_Mod
                 if (text[0] == '@')
                 {
                     string message = text.Substring(1);
-                    Mod.SendChatMessageToGlobalServer(message);
+                    Mod.SendChatMessageToGlobalServer(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
 
                     // Reset Player UI
                     __instance.typed.text = "";

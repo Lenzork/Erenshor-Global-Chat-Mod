@@ -20,6 +20,7 @@ namespace Erenshor_Global_Chat_Mod
         private EventBasedNetListener _listener;
         private static string steamUsername;
         private const string SERVER_IP = "127.0.0.1"; // Enter the IP of the global chat server here
+        private bool wrongVersion = false;
 
         private static string[] ValidScenes = new string[]
         {
@@ -55,22 +56,51 @@ namespace Erenshor_Global_Chat_Mod
             "Jaws"
         };
 
+        private struct PackageData
+        {
+            public enum PackageType
+            {
+                ChatMessage,
+                Information
+            }
+
+            public enum InformationType
+            {
+                PlayerConnected,
+                PlayerDisconnected,
+                VersionMismatch
+            }
+
+            public PackageType Type;
+            public InformationType Info;
+            public string SenderName;
+            public string Message;
+            public string ModVersion;
+        }
+
         public override void OnLateInitializeMelon()
         {
             // Check if steam is running
             if (!SteamManager.Initialized)
             {
-                MelonLogger.Error("Steam is not initialized. The Global Chat Mod requires Steam to be running.");
-                return;
+                MelonLogger.BigError("Erenshor_Global_Chat_Mod", "Steam is not initialized. The Global Chat Mod requires Steam to be running.");
+
+                // Deactive/Unload the mod
+                GetThisMelonMod().Unregister();
             }
 
             steamUsername = SteamFriends.GetPersonaName();
             MelonLogger.Msg($"Using {steamUsername} as name for the global chat.");
         }
 
+        private MelonMod GetThisMelonMod()
+        {
+            return RegisteredMelons.FirstOrDefault(m => m.Equals(this));
+        }
+
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
-            if (ValidScenes.Contains(sceneName) && _serverPeer == null)
+            if (ValidScenes.Contains(sceneName) && _serverPeer == null && !wrongVersion)
             {
                 ConnectToGlobalServer();
             }
@@ -119,11 +149,17 @@ namespace Erenshor_Global_Chat_Mod
                 else if (data.Info == PackageData.InformationType.PlayerDisconnected)
                 {
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} has <color=red>disconnected</color> from the Global Chat.</color>");
+                } else if (data.Info == PackageData.InformationType.VersionMismatch)
+                {
+                    MelonLogger.Warning("Disconnected due to Version mismatch with the server.");
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
+                    peer.Disconnect();
+                    wrongVersion = true;
                 }
             }
         }
 
-        public static void SendChatMessageToGlobalServer(string message)
+        public static void SendChatMessageToGlobalServer(string message, MelonInfoAttribute modInfo)
         {
             if(_serverPeer == null)
             {
@@ -148,7 +184,8 @@ namespace Erenshor_Global_Chat_Mod
             PackageData data = new PackageData
             {
                 SenderName = GetSteamUsername(),
-                Message = message
+                Message = message,
+                ModVersion = modInfo.Version.ToString()
             };
 
             writer.Put(JsonConvert.SerializeObject(data, settings));
@@ -160,26 +197,6 @@ namespace Erenshor_Global_Chat_Mod
         private void ReceiveChatMessage(PackageData data)
         {
             UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.SenderName}: {data.Message}");
-        }
-
-        private struct PackageData
-        {
-            public enum PackageType
-            {
-                ChatMessage,
-                Information
-            }
-
-            public enum InformationType
-            {
-                PlayerConnected,
-                PlayerDisconnected
-            }
-
-            public PackageType Type;
-            public InformationType Info;
-            public string SenderName;
-            public string Message;
         }
 
         public static string GetSteamUsername()
@@ -202,7 +219,8 @@ namespace Erenshor_Global_Chat_Mod
             {
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.PlayerConnected,
-                SenderName = steamUsername
+                SenderName = steamUsername,
+                ModVersion = GetThisMelonMod().Info.Version.ToString()
             };
 
             writer.Put(JsonConvert.SerializeObject(data, settings));
@@ -221,32 +239,37 @@ namespace Erenshor_Global_Chat_Mod
             {
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.PlayerDisconnected,
-                SenderName = steamUsername
+                SenderName = steamUsername,
+                ModVersion = GetThisMelonMod().Info.Version.ToString()
             };
 
             writer.Put(JsonConvert.SerializeObject(data, settings));
 
-            // Send Message to the Server
             _serverPeer.Send(writer, DeliveryMethod.ReliableOrdered);
 
-            // Sleep for a short time to ensure the message is sent
-            System.Threading.Thread.Sleep(300);
-            _serverPeer.Disconnect();
-            _serverPeer = null;
+            Task.Run(async () =>
+            {
+                while (_serverPeer.GetPacketsCountInReliableQueue(0, true) > 0)
+                {
+                    await Task.Delay(50);
+                }
+
+                // Verbindung trennen
+                _serverPeer.Disconnect();
+                _serverPeer = null;
+            });
+            
         }
 
         private void ConnectToGlobalServer()
         {
-            // Netzwerk-Listener einrichten
             _listener = new EventBasedNetListener();
             _netManager = new NetManager(_listener);
 
-            // Listener-Ereignisse einrichten
             _listener.NetworkReceiveEvent += (peer, reader, channel, deliveryMethod) =>
             {
                 OnNetworkReceive(peer, reader, deliveryMethod);
             };
-            // Wenn zum globalen Server verbunden
             _listener.PeerConnectedEvent += (peer) =>
             {
                 SendConnectedPackage();
@@ -254,7 +277,7 @@ namespace Erenshor_Global_Chat_Mod
 
             // Client starten  
             _netManager.Start();
-            _serverPeer = _netManager.Connect(SERVER_IP, 9050, "ErenshorGlobalChat"); // Beispiel-Serveradresse  
+            _serverPeer = _netManager.Connect(SERVER_IP, 9050, "ErenshorGlobalChat");
 
             int attemps = 0;
 
@@ -266,7 +289,6 @@ namespace Erenshor_Global_Chat_Mod
                 System.Threading.Thread.Sleep(1000);
             }
 
-            // Überprüfen, ob die Verbindung erfolgreich war  
             if (_serverPeer.ConnectionState == ConnectionState.Connected)
             {
                 MelonLogger.Msg("Successfully connected to the Global Chat Server.");
