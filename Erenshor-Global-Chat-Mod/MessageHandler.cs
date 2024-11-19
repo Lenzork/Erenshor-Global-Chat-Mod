@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using MelonLoader;
 using UnityEngine;
+using static MelonLoader.MelonLogger;
 
 namespace Erenshor_Global_Chat_Mod
 {
@@ -36,10 +37,14 @@ namespace Erenshor_Global_Chat_Mod
                     Mod.SendChatMessageToGlobalServer(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
 
                     // Reset Player UI
-                    __instance.typed.text = "";
-                    __instance.CDFrames = 10f;
-                    __instance.InputBox.SetActive(value: false);
-                    GameData.PlayerTyping = false;
+                    resetPlayerUI(__instance);
+                    return false;
+                } else if (text.Contains("/@online"))
+                {
+                    Mod.SendRequestForOnlinePlayersToGlobalServer(MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+
+                    // Reset Player UI
+                    resetPlayerUI(__instance);
                     return false;
                 } else if (Mod.GetWriteIntoGlobalByDefault())
                 {
@@ -54,6 +59,15 @@ namespace Erenshor_Global_Chat_Mod
                     return false;
                 }
                 return true;
+            }
+
+            private static void resetPlayerUI(TypeText __instance)
+            {
+                // Reset Player UI
+                __instance.typed.text = "";
+                __instance.CDFrames = 10f;
+                __instance.InputBox.SetActive(value: false);
+                GameData.PlayerTyping = false;
             }
         }
     }
