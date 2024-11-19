@@ -26,7 +26,7 @@ namespace Erenshor_Global_Chat_Mod
                     UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (Mod.GetWriteIntoGlobalByDefault() ? "enabled" : "disabled") + "</color>");
                     
                     // Reset Player UI
-                    resetPlayerUI(__instance)
+                    resetPlayerUI(__instance);
                     return false;
                 }
                 else if (text[0] == '@')
@@ -50,7 +50,7 @@ namespace Erenshor_Global_Chat_Mod
                     Mod.SendChatMessageToGlobalServer(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
 
                     // Reset Player UI
-                    resetPlayerUI(__instance)
+                    resetPlayerUI(__instance);
                     return false;
                 }
                 return true;
