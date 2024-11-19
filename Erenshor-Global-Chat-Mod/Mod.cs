@@ -21,6 +21,7 @@ namespace Erenshor_Global_Chat_Mod
         private static string steamUsername;
         private const string SERVER_IP = "127.0.0.1"; // Enter the IP of the global chat server here
         private bool wrongVersion = false;
+        private static bool writeIntoGlobalByDefault = false;
 
         private static string[] ValidScenes = new string[]
         {
@@ -76,6 +77,16 @@ namespace Erenshor_Global_Chat_Mod
             public string SenderName;
             public string Message;
             public string ModVersion;
+        }
+
+        public static bool GetWriteIntoGlobalByDefault()
+        {
+            return writeIntoGlobalByDefault;
+        }
+
+        public static void SetWriteIntoGlobalByDefault(bool value)
+        {
+            writeIntoGlobalByDefault = value;
         }
 
         public override void OnLateInitializeMelon()
