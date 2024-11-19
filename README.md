@@ -24,6 +24,9 @@ or look at the screenshot below
 
 ![Screenshot 2024-11-16 214043](https://github.com/user-attachments/assets/642f982e-3a3b-41a5-a3b9-0d63f700d22e)
 
+- If you type ``@@`` in chat it will toggle your chatmode, making you able to chat the whole time in the global chat without adding ``@`` infront
+- If you type ``/@online`` in chat you will see every player that is currently online in the global chat.
+
 ## Made with MelonLoader
 <p align="center">
   <img src="https://melonwiki.xyz/_media/logo.svg" height="20%" width="20%" />
