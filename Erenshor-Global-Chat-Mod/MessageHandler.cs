@@ -30,6 +30,17 @@ namespace Erenshor_Global_Chat_Mod
                     __instance.InputBox.SetActive(value: false);
                     GameData.PlayerTyping = false;
                     return false;
+                } else if (text.Contains("@@"))
+                {
+                    Mod.writeIntoGlobalByDefault = !Mod.writeIntoGlobalByDefault;
+                    UpdateSocialLog.LogAdd("Chatting in global chat by default is now " + (Mod.writeIntoGlobalByDefault ? "enabled" : "disabled"));
+                }
+                // When the player types a message, it will be sent to the global chat by default
+                if (Mod.writeIntoGlobalByDefault)
+                {
+                    string message = text.Substring(0);
+                    Mod.SendChatMessageToGlobalServer(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+                    return false;
                 }
                 return true;
             }
