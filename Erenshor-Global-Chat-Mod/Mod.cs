@@ -21,6 +21,7 @@ namespace Erenshor_Global_Chat_Mod
         private static string steamUsername;
         private const string SERVER_IP = "127.0.0.1"; // Enter the IP of the global chat server here
         private bool wrongVersion = false;
+        public static bool writeIntoGlobalByDefault = false;
 
         private static string[] ValidScenes = new string[]
         {
