@@ -21,6 +21,7 @@ namespace Erenshor_Global_Chat_Mod
         private static string steamUsername;
         private const string SERVER_IP = "127.0.0.1"; // Enter the IP of the global chat server here
         private bool wrongVersion = false;
+        private static bool writeIntoGlobalByDefault = false;
 
         private static string[] ValidScenes = new string[]
         {
@@ -68,7 +69,8 @@ namespace Erenshor_Global_Chat_Mod
             {
                 PlayerConnected,
                 PlayerDisconnected,
-                VersionMismatch
+                VersionMismatch,
+                PlayersOnline
             }
 
             public PackageType Type;
@@ -76,6 +78,16 @@ namespace Erenshor_Global_Chat_Mod
             public string SenderName;
             public string Message;
             public string ModVersion;
+        }
+
+        public static bool GetWriteIntoGlobalByDefault()
+        {
+            return writeIntoGlobalByDefault;
+        }
+
+        public static void SetWriteIntoGlobalByDefault(bool value)
+        {
+            writeIntoGlobalByDefault = value;
         }
 
         public override void OnLateInitializeMelon()
@@ -142,19 +154,23 @@ namespace Erenshor_Global_Chat_Mod
                 ReceiveChatMessage(data);
             } else if(data.Type == PackageData.PackageType.Information)
             {
-                if (data.Info == PackageData.InformationType.PlayerConnected)
+                switch(data.Info)
                 {
-                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} has <color=green>connected</color> to the Global Chat.</color>");
-                }
-                else if (data.Info == PackageData.InformationType.PlayerDisconnected)
-                {
-                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} has <color=red>disconnected</color> from the Global Chat.</color>");
-                } else if (data.Info == PackageData.InformationType.VersionMismatch)
-                {
-                    MelonLogger.Warning("Disconnected due to Version mismatch with the server.");
-                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
-                    peer.Disconnect();
-                    wrongVersion = true;
+                    case PackageData.InformationType.PlayerConnected:
+                        UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} has <color=green>connected</color> to the Global Chat.</color>");
+                        break;
+                    case PackageData.InformationType.PlayerDisconnected:
+                        UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} has <color=red>disconnected</color> from the Global Chat.</color>");
+                        break;
+                    case PackageData.InformationType.PlayersOnline:
+                        UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
+                        break;
+                    case PackageData.InformationType.VersionMismatch:
+                        MelonLogger.Warning("Disconnected due to Version mismatch with the server.");
+                        UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
+                        peer.Disconnect();
+                        wrongVersion = true;
+                        break;
                 }
             }
         }
@@ -185,6 +201,34 @@ namespace Erenshor_Global_Chat_Mod
             {
                 SenderName = GetSteamUsername(),
                 Message = message,
+                ModVersion = modInfo.Version.ToString()
+            };
+
+            writer.Put(JsonConvert.SerializeObject(data, settings));
+
+            // Send Message to the Server
+            _serverPeer.Send(writer, DeliveryMethod.ReliableOrdered);
+        }
+
+        public static void SendRequestForOnlinePlayersToGlobalServer(MelonInfoAttribute modInfo)
+        {
+            if (_serverPeer == null)
+            {
+                MelonLogger.Error("No connection to the Global Chat Server. Couldn't send message.");
+                return;
+            }
+
+            MelonLogger.Msg($"Sending request to see online players to global server");
+
+            var writer = new NetDataWriter();
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
+            PackageData data = new PackageData
+            {
+                SenderName = GetSteamUsername(),
+                Type = PackageData.PackageType.Information,
+                Info = PackageData.InformationType.PlayersOnline,
                 ModVersion = modInfo.Version.ToString()
             };
 
