@@ -199,7 +199,7 @@ namespace Erenshor_Global_Chat_Mod
             _serverPeer.Send(writer, DeliveryMethod.ReliableOrdered);
         }
 
-        public static void SendRequestForOnlinePlayersToGlobalServer()
+        public static void SendRequestForOnlinePlayersToGlobalServer(MelonInfoAttribute modInfo)
         {
             if (_serverPeer == null)
             {
@@ -217,7 +217,8 @@ namespace Erenshor_Global_Chat_Mod
             {
                 SenderName = GetSteamUsername(),
                 Type = PackageData.PackageType.Information,
-                Info = PackageData.InformationType.PlayersOnline
+                Info = PackageData.InformationType.PlayersOnline,
+                ModVersion = modInfo.Version.ToString()
             };
 
             writer.Put(JsonConvert.SerializeObject(data, settings));
