@@ -30,7 +30,7 @@ namespace Erenshor_Global_Chat_Mod
                     return false;
                 } else if (text.Contains("/@online"))
                 {
-
+                    Mod.SendRequestForOnlinePlayersToGlobalServer();
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
