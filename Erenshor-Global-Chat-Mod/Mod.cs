@@ -199,7 +199,7 @@ namespace Erenshor_Global_Chat_Mod
             _serverPeer.Send(writer, DeliveryMethod.ReliableOrdered);
         }
 
-        private void SendRequestForOnlinePlayersToGlobalServer()
+        public static void SendRequestForOnlinePlayersToGlobalServer()
         {
             if (_serverPeer == null)
             {
