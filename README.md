@@ -7,7 +7,7 @@ This mod adds a global Chat to the game in which (real) players can communicate 
 
 # Requirements
 > [!IMPORTANT]
-> Melonloader Version >= 0.6.4 is needed
+> Melonloader Version >= 0.6.4 is recommended
 
 ## Usage
 The usage is pretty easy and straight forward. As soon as you enter the world with your character a connection to the global chat server will be established and you are ready to chat! No need to do anything yourself.
