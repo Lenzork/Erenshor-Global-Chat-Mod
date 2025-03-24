@@ -1,12 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using MelonLoader;
 using Erenshor_Global_Chat_Mod;
-
-[assembly: MelonInfo(typeof(Mod), "Erenshor Global Chat Mod", "1.2.0", "Lenzork")]
-[assembly: MelonGame("Burgee Media", "Erenshor")]
-[assembly: MelonColor(System.ConsoleColor.DarkMagenta)]
 
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
