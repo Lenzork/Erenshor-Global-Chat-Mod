@@ -27,5 +27,6 @@ namespace Erenshor_Global_Chat_Mod
         public string SenderName;
         public string Message;
         public string ModVersion;
+        public string ModHash;
     }
 }

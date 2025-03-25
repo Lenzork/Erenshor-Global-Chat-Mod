@@ -15,12 +15,12 @@ namespace Erenshor_Global_Chat_Mod
     internal class MessageHandler
     {
         private static bool writeIntoGlobalByDefault = false;
-        public static PluginInfo plugin = null;
 
         [HarmonyPatch(typeof(TypeText), "CheckInput")]
-        private static class Patch
+        public static class Patch
         {
-            private static bool Prefix(TypeText __instance)
+            [HarmonyPrefix]
+            public static bool Prefix(TypeText __instance)
             {
                 string text = __instance.typed.text.ToString();
 
@@ -36,14 +36,14 @@ namespace Erenshor_Global_Chat_Mod
                 else if (text[0] == '@')
                 {
                     string message = text.Substring(1);
-                    MessageSender.SendChatMessage(message, plugin.Metadata.Version.ToString(), Steamworks.SteamFriends.GetPersonaName(), BepInEx.Logging.Logger);
+                    MessageSender.SendChatMessage(message, Mod.GetSteamUsername());
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
                     return false;
                 } else if (text.Contains("/@online"))
                 {
-                    MessageSender.SendChatMessage(MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+                    MessageSender.SendRequestForOnlinePlayers(Mod.GetSteamUsername());
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
@@ -51,7 +51,7 @@ namespace Erenshor_Global_Chat_Mod
                 } else if (writeIntoGlobalByDefault)
                 {
                     string message = text.Substring(0);
-                    MessageSender.SendChatMessage(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+                    MessageSender.SendChatMessage(message, Mod.GetSteamUsername());
 
                     // Reset Player UI
                     resetPlayerUI(__instance);

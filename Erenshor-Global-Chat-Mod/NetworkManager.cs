@@ -1,34 +1,46 @@
 using LiteNetLib;
 using BepInEx.Logging;
 using Newtonsoft.Json;
+using BepInEx;
+using BepInEx.Bootstrap;
+using UnityEngine;
+using System.Collections;
 
 namespace Erenshor_Global_Chat_Mod
 {
-    public class NetworkManager
+    public class NetworkManager : MonoBehaviour
     {
         private NetManager _netManager;
-        private NetPeer _serverPeer;
+        private static NetPeer _serverPeer;
         private EventBasedNetListener _listener;
         private ManualLogSource _logger;
         private string _steamUsername;
 
         public bool IsConnected => _serverPeer != null && _serverPeer.ConnectionState == ConnectionState.Connected;
 
-        public NetworkManager(ManualLogSource logger, string steamUsername)
+        public NetPeer GetPeer()
+        {
+            return _serverPeer;
+        }
+
+        public void Init(ManualLogSource logger, string steamUsername, PluginInfo pluginInfo)
         {
             _logger = logger;
             _steamUsername = steamUsername;
             _listener = new EventBasedNetListener();
             _netManager = new NetManager(_listener);
 
-            _listener.NetworkReceiveEvent += (peer, reader, channel, deliveryMethod) => OnNetworkReceive(peer, reader, deliveryMethod); // Fix the delegate signature
+            _listener.NetworkReceiveEvent += (peer, reader, channel, deliveryMethod) =>
+            {
+                OnNetworkReceive(peer, reader, deliveryMethod);
+            };
             _listener.PeerConnectedEvent += OnPeerConnected;
         }
 
         public void ConnectToGlobalServer()
         {
             _netManager.Start();
-            _serverPeer = _netManager.Connect("127.0.0.1", 9050, "ErenshorGlobalChat");
+            _serverPeer = _netManager.Connect(ConfigGenerator._serverIp.Value, ConfigGenerator._serverPort.Value, "ErenshorGlobalChat");
 
             int attempts = 0;
             while (_serverPeer.ConnectionState != ConnectionState.Connected && attempts < 5)
@@ -50,7 +62,7 @@ namespace Erenshor_Global_Chat_Mod
 
         public void Update()
         {
-            if (_serverPeer == null) return;
+            if (_serverPeer == null || this._netManager == null) return;
             _netManager.PollEvents();
 
             if (_serverPeer.ConnectionState == ConnectionState.Disconnected)
@@ -60,11 +72,11 @@ namespace Erenshor_Global_Chat_Mod
             }
         }
 
-        private void OnNetworkReceive(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod)
+        public void OnNetworkReceive(NetPeer peer, NetPacketReader reader, DeliveryMethod deliveryMethod)
         {
             string message = reader.GetString();
             var data = JsonConvert.DeserializeObject<PackageData>(message);
-            ChatHandler.HandleReceivedData(data, _logger);
+            ChatHandler.HandleReceivedData(data);
         }
 
         private void OnPeerConnected(NetPeer peer)
@@ -79,7 +91,8 @@ namespace Erenshor_Global_Chat_Mod
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.PlayerConnected,
                 SenderName = _steamUsername,
-                ModVersion = "1.0.0"
+                ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
+                ModHash = Mod.GetModHash()
             };
             MessageSender.SendPackage(_serverPeer, data);
         }
@@ -91,7 +104,8 @@ namespace Erenshor_Global_Chat_Mod
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.PlayerDisconnected,
                 SenderName = _steamUsername,
-                ModVersion = "1.0.0"
+                ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
+                ModHash = Mod.GetModHash()
             };
             MessageSender.SendPackage(_serverPeer, data);
             _serverPeer.Disconnect();

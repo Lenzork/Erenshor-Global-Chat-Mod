@@ -5,8 +5,8 @@ namespace Erenshor_Global_Chat_Mod
 {
     public static class ConfigGenerator
     {
-        private static ConfigEntry<string> _serverIp;
-        private static ConfigEntry<int> _serverPort;
+        public static ConfigEntry<string> _serverIp;
+        public static ConfigEntry<int> _serverPort;
 
         public static void GenerateConfig(BaseUnityPlugin baseUnityPlugin)
         {

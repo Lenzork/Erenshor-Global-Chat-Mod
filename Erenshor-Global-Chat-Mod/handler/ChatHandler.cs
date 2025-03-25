@@ -4,20 +4,18 @@ namespace Erenshor_Global_Chat_Mod
 {
     public static class ChatHandler
     {
-        public static void HandleReceivedData(PackageData data, ManualLogSource logger)
+        public static void HandleReceivedData(PackageData data)
         {
-            switch (data.Type)
+            if(data.Type == PackageData.PackageType.ChatMessage) {
+                UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.SenderName}: {data.Message}");
+            }
+            else if (data.Type == PackageData.PackageType.Information)
             {
-                case PackageData.PackageType.ChatMessage:
-                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.SenderName}: {data.Message}");
-                    break;
-                case PackageData.PackageType.Information:
-                    HandleInformation(data, logger);
-                    break;
+                HandleInformation(data);
             }
         }
 
-        private static void HandleInformation(PackageData data, ManualLogSource logger)
+        private static void HandleInformation(PackageData data)
         {
             switch (data.Info)
             {
@@ -31,7 +29,6 @@ namespace Erenshor_Global_Chat_Mod
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
                     break;
                 case PackageData.InformationType.VersionMismatch:
-                    logger.LogWarning("Disconnected due to Version mismatch with the server.");
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
                     break;
             }

@@ -2,10 +2,12 @@ using LiteNetLib;
 using Newtonsoft.Json;
 using BepInEx.Logging;
 using LiteNetLib.Utils;
+using BepInEx;
+using BepInEx.Bootstrap;
 
 namespace Erenshor_Global_Chat_Mod
 {
-    public static class MessageSender
+    public class MessageSender
     {
         public static void SendPackage(NetPeer peer, PackageData data)
         {
@@ -15,34 +17,36 @@ namespace Erenshor_Global_Chat_Mod
             peer.Send(writer, DeliveryMethod.ReliableOrdered);
         }
 
-        public static void SendChatMessage(NetPeer peer, string message, string steamUsername, ManualLogSource logger)
+        public static void SendChatMessage(string message, string steamUsername)
         {
-            if (peer == null)
+            if (Mod.GetNetworkManager().GetPeer() == null)
             {
-                logger.LogError("No connection to the Global Chat Server. Couldn't send message.");
+                UpdateSocialLog.LogAdd("No connection to the Global Chat Server. Couldn't send message.");
                 return;
             }
 
             if (message.Length > 255)
             {
-                logger.LogError("Message is too long. Couldn't send message.");
+                UpdateSocialLog.LogAdd("Message is too long. Couldn't send message.");
                 return;
             }
 
             var data = new PackageData
             {
                 SenderName = steamUsername,
+                Type = PackageData.PackageType.ChatMessage,
                 Message = message,
-                ModVersion = "1.2.0"
+                ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
+                ModHash = Mod.GetModHash()
             };
-            SendPackage(peer, data);
+            SendPackage(Mod.GetNetworkManager().GetPeer(), data);
         }
 
-        public static void SendRequestForOnlinePlayers(NetPeer peer, string steamUsername, ManualLogSource logger)
+        public static void SendRequestForOnlinePlayers(string steamUsername)
         {
-            if (peer == null)
+            if (Mod.GetNetworkManager().GetPeer() == null)
             {
-                logger.LogError("No connection to the Global Chat Server. Couldn't send message.");
+                UpdateSocialLog.LogAdd("No connection to the Global Chat Server. Couldn't send message.");
                 return;
             }
 
@@ -51,9 +55,10 @@ namespace Erenshor_Global_Chat_Mod
                 SenderName = steamUsername,
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.PlayersOnline,
-                ModVersion = "1.2.0"
+                ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
+                ModHash = Mod.GetModHash()
             };
-            SendPackage(peer, data);
+            SendPackage(Mod.GetNetworkManager().GetPeer(), data);
         }
     }
 }
