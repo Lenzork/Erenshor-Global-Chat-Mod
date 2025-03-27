@@ -98,6 +98,8 @@ namespace Erenshor_Global_Chat_Mod
 
         public void OnApplicationQuit()
         {
+            if (_networkManager == null) return;
+
             _networkManager.SendDisconnectedPackage();
         }
     }
