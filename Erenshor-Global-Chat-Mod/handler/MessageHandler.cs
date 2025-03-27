@@ -5,25 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 
 using HarmonyLib;
-using MelonLoader;
+using BepInEx;
 using UnityEngine;
-using static MelonLoader.MelonLogger;
+using static BepInEx.Logging.Logger;
+using BepInEx.Logging;
 
 namespace Erenshor_Global_Chat_Mod
 {
     internal class MessageHandler
     {
+        private static bool writeIntoGlobalByDefault = false;
+
         [HarmonyPatch(typeof(TypeText), "CheckInput")]
-        private static class Patch
+        public static class Patch
         {
-            private static bool Prefix(TypeText __instance)
+            [HarmonyPrefix]
+            public static bool Prefix(TypeText __instance)
             {
                 string text = __instance.typed.text.ToString();
 
                 if (text.Contains("@@"))
                 {
-                    Mod.SetWriteIntoGlobalByDefault(!Mod.GetWriteIntoGlobalByDefault());
-                    UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (Mod.GetWriteIntoGlobalByDefault() ? "enabled" : "disabled") + "</color>");
+                    writeIntoGlobalByDefault = !writeIntoGlobalByDefault;
+                    UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (writeIntoGlobalByDefault ? "enabled" : "disabled") + "</color>");
                     
                     // Reset Player UI
                     resetPlayerUI(__instance);
@@ -32,22 +36,22 @@ namespace Erenshor_Global_Chat_Mod
                 else if (text[0] == '@')
                 {
                     string message = text.Substring(1);
-                    Mod.SendChatMessageToGlobalServer(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+                    MessageSender.SendChatMessage(message, Mod.GetSteamUsername());
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
                     return false;
                 } else if (text.Contains("/@online"))
                 {
-                    Mod.SendRequestForOnlinePlayersToGlobalServer(MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+                    MessageSender.SendRequestForOnlinePlayers(Mod.GetSteamUsername());
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
                     return false;
-                } else if (Mod.GetWriteIntoGlobalByDefault())
+                } else if (writeIntoGlobalByDefault)
                 {
                     string message = text.Substring(0);
-                    Mod.SendChatMessageToGlobalServer(message, MelonMod.FindMelon("Erenshor Global Chat Mod", "Lenzork").Info);
+                    MessageSender.SendChatMessage(message, Mod.GetSteamUsername());
 
                     // Reset Player UI
                     resetPlayerUI(__instance);

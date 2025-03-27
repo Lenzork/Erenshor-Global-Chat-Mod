@@ -6,8 +6,7 @@
 This mod adds a global Chat to the game in which (real) players can communicate with each other. Adding a little bit of a "Multiplayer" Experience
 
 # Requirements
-> [!IMPORTANT]
-> Melonloader Version >= 0.6.4 is recommended
+You need BepInEx 5
 
 ## Usage
 The usage is pretty easy and straight forward. As soon as you enter the world with your character a connection to the global chat server will be established and you are ready to chat! No need to do anything yourself.
@@ -27,14 +26,10 @@ or look at the screenshot below
 - If you type ``@@`` in chat it will toggle your chatmode, making you able to chat the whole time in the global chat without adding ``@`` infront
 - If you type ``/@online`` in chat you will see every player that is currently online in the global chat.
 
-## Made with MelonLoader
-<p align="center">
-  <img src="https://melonwiki.xyz/_media/logo.svg" height="20%" width="20%" />
-</p>
-The Developement for this Mod has been made with MelonLoader which is also required to use this mod.
-
+## Made with BepInEx
+The Development for this Mod has been made with BepInEx which is also required to use this mod.
 ## How to Install
-1. [Install MelonLoader](https://melonwiki.xyz/#/?id=automated-installation) 
+1. [Install BepInEx](https://docs.bepinex.dev/articles/user_guide/installation/index.html) 
 2. Download the latest .zip of the Mod in the [releases](https://github.com/Lenzork/Erenshor-Achievement-Mod/releases)
 3. Extract all Files that are in the Zip Folder into your Erenshor Folder.
 4. Start the Game and Enjoy!
