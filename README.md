@@ -27,8 +27,7 @@ or look at the screenshot below
 - If you type ``/@online`` in chat you will see every player that is currently online in the global chat.
 
 ## Made with BepInEx
-The Developement for this Mod has been made with BepInEx which is also required to use this mod.
-
+The Development for this Mod has been made with BepInEx which is also required to use this mod.
 ## How to Install
 1. [Install BepInEx](https://docs.bepinex.dev/articles/user_guide/installation/index.html) 
 2. Download the latest .zip of the Mod in the [releases](https://github.com/Lenzork/Erenshor-Achievement-Mod/releases)
