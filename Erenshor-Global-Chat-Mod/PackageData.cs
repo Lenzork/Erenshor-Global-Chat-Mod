@@ -19,7 +19,8 @@ namespace Erenshor_Global_Chat_Mod
             PlayerConnected,
             PlayerDisconnected,
             VersionMismatch,
-            PlayersOnline
+            PlayersOnline,
+            BlacklistedMessage
         }
 
         public PackageType Type;
