@@ -31,6 +31,9 @@ namespace Erenshor_Global_Chat_Mod
                 case PackageData.InformationType.VersionMismatch:
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> {data.Message}");
                     break;
+                case PackageData.InformationType.BlacklistedMessage:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=red>{data.Message}</color>");
+                    break;
             }
         }
     }
