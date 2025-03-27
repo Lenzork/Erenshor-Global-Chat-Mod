@@ -38,7 +38,7 @@ namespace Erenshor_Global_Chat_Mod
                     // Reset Player UI
                     resetPlayerUI(__instance);
                     return false;
-                } else if (text.Contains("/@connect")) {
+                } else if (text.StartsWith("/@connect")) {
                     Mod.GetNetworkManager().ConnectToGlobalServer();
                     return false;
                 } else if (writeIntoGlobalByDefault)
