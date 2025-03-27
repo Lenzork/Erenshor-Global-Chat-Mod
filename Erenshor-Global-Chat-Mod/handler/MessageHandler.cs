@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using HarmonyLib;
-using BepInEx;
-using UnityEngine;
-using static BepInEx.Logging.Logger;
-using BepInEx.Logging;
+﻿using HarmonyLib;
 
 namespace Erenshor_Global_Chat_Mod
 {
@@ -28,7 +18,7 @@ namespace Erenshor_Global_Chat_Mod
                 {
                     writeIntoGlobalByDefault = !writeIntoGlobalByDefault;
                     UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (writeIntoGlobalByDefault ? "enabled" : "disabled") + "</color>");
-                    
+
                     // Reset Player UI
                     resetPlayerUI(__instance);
                     return false;
@@ -47,6 +37,9 @@ namespace Erenshor_Global_Chat_Mod
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
+                    return false;
+                } else if (text.StartsWith("/@connect")) {
+                    Mod.GetNetworkManager().ConnectToGlobalServer();
                     return false;
                 } else if (writeIntoGlobalByDefault)
                 {

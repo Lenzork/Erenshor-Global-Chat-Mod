@@ -40,7 +40,7 @@ namespace Erenshor_Global_Chat_Mod
 
             if (!File.Exists(dllPath))
             {
-                throw new System.IO.FileNotFoundException("DLL not found", dllPath);
+                throw new FileNotFoundException("DLL not found", dllPath);
             }
 
             using (var sha256 = SHA256.Create())
