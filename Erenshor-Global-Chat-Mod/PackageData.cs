@@ -20,7 +20,8 @@ namespace Erenshor_Global_Chat_Mod
             PlayerDisconnected,
             VersionMismatch,
             PlayersOnline,
-            BlacklistedMessage
+            BlacklistedMessage,
+            MessageOfTheDay
         }
 
         public PackageType Type;
@@ -29,5 +30,6 @@ namespace Erenshor_Global_Chat_Mod
         public string Message;
         public string ModVersion;
         public string ModHash;
+        public string SteamId;
     }
 }

@@ -34,6 +34,9 @@ namespace Erenshor_Global_Chat_Mod
                 case PackageData.InformationType.BlacklistedMessage:
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=red>{data.Message}</color>");
                     break;
+                case PackageData.InformationType.MessageOfTheDay:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.Message}</color>");
+                    break;
             }
         }
     }
