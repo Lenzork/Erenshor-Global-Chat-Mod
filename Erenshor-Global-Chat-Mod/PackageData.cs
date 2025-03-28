@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Erenshor_Global_Chat_Mod
+﻿namespace Erenshor_Global_Chat_Mod
 {
     public struct PackageData
     {
@@ -20,7 +14,8 @@ namespace Erenshor_Global_Chat_Mod
             PlayerDisconnected,
             VersionMismatch,
             PlayersOnline,
-            BlacklistedMessage
+            BlacklistedMessage,
+            MessageOfTheDay
         }
 
         public PackageType Type;
@@ -29,5 +24,6 @@ namespace Erenshor_Global_Chat_Mod
         public string Message;
         public string ModVersion;
         public string ModHash;
+        public string SteamId;
     }
 }

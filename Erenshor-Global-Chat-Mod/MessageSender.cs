@@ -1,9 +1,8 @@
 using LiteNetLib;
 using Newtonsoft.Json;
-using BepInEx.Logging;
 using LiteNetLib.Utils;
-using BepInEx;
 using BepInEx.Bootstrap;
+using Steamworks;
 
 namespace Erenshor_Global_Chat_Mod
 {
@@ -37,7 +36,8 @@ namespace Erenshor_Global_Chat_Mod
                 Type = PackageData.PackageType.ChatMessage,
                 Message = message,
                 ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
-                ModHash = Mod.GetModHash()
+                ModHash = Mod.GetModHash(),
+                SteamId = SteamUser.GetSteamID().ToString()
             };
             SendPackage(Mod.GetNetworkManager().GetPeer(), data);
         }
@@ -56,7 +56,8 @@ namespace Erenshor_Global_Chat_Mod
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.PlayersOnline,
                 ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
-                ModHash = Mod.GetModHash()
+                ModHash = Mod.GetModHash(),
+                SteamId = SteamUser.GetSteamID().ToString()
             };
             SendPackage(Mod.GetNetworkManager().GetPeer(), data);
         }

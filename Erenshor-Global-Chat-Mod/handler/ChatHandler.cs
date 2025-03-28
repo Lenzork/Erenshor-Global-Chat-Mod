@@ -1,5 +1,3 @@
-using BepInEx.Logging;
-
 namespace Erenshor_Global_Chat_Mod
 {
     public static class ChatHandler
@@ -33,6 +31,9 @@ namespace Erenshor_Global_Chat_Mod
                     break;
                 case PackageData.InformationType.BlacklistedMessage:
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=red>{data.Message}</color>");
+                    break;
+                case PackageData.InformationType.MessageOfTheDay:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.Message}</color>");
                     break;
             }
         }

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using BepInEx;
 using BepInEx.Bootstrap;
 using UnityEngine;
-using System.Collections;
+using Steamworks;
 
 namespace Erenshor_Global_Chat_Mod
 {
@@ -52,6 +52,7 @@ namespace Erenshor_Global_Chat_Mod
 
             if (_serverPeer.ConnectionState == ConnectionState.Connected)
             {
+                UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=green>Successfully connected to the Global Chat Server.</color>");
                 _logger.LogMessage("Successfully connected to the Global Chat Server.");
             }
             else
@@ -68,6 +69,7 @@ namespace Erenshor_Global_Chat_Mod
             if (_serverPeer.ConnectionState == ConnectionState.Disconnected)
             {
                 _logger.LogError("Lost connection to the Global Chat Server.");
+                UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=red>Lost connection to the Global Chat Server.</color>");
                 _serverPeer = null;
             }
         }
@@ -92,7 +94,8 @@ namespace Erenshor_Global_Chat_Mod
                 Info = PackageData.InformationType.PlayerConnected,
                 SenderName = _steamUsername,
                 ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
-                ModHash = Mod.GetModHash()
+                ModHash = Mod.GetModHash(),
+                SteamId = SteamUser.GetSteamID().ToString()
             };
             MessageSender.SendPackage(_serverPeer, data);
         }
@@ -105,7 +108,8 @@ namespace Erenshor_Global_Chat_Mod
                 Info = PackageData.InformationType.PlayerDisconnected,
                 SenderName = _steamUsername,
                 ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
-                ModHash = Mod.GetModHash()
+                ModHash = Mod.GetModHash(),
+                SteamId = SteamUser.GetSteamID().ToString()
             };
             MessageSender.SendPackage(_serverPeer, data);
             _serverPeer.Disconnect();
