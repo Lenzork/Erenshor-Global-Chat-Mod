@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
+    <Compile Include="EventListener.cs" />
     <Compile Include="handler\ChatHandler.cs" />
     <Compile Include="handler\MessageHandler.cs" />
     <Compile Include="MessageSender.cs" />

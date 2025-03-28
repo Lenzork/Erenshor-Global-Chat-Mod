@@ -61,5 +61,45 @@ namespace Erenshor_Global_Chat_Mod
             };
             SendPackage(Mod.GetNetworkManager().GetPeer(), data);
         }
+
+        public static void SendMilestonePackage(string steamUsername, int level)
+        {
+            if (Mod.GetNetworkManager().GetPeer() == null)
+            {
+                UpdateSocialLog.LogAdd("No connection to the Global Chat Server. Couldn't send message.");
+                return;
+            }
+            var data = new PackageData
+            {
+                SenderName = steamUsername,
+                Type = PackageData.PackageType.Information,
+                Info = PackageData.InformationType.PlayerMilestone,
+                ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
+                ModHash = Mod.GetModHash(),
+                SteamId = SteamUser.GetSteamID().ToString(),
+                Message = level.ToString()
+            };
+            SendPackage(Mod.GetNetworkManager().GetPeer(), data);
+        }
+
+        public static void SendRareItemPackage(string steamUsername, Item item)
+        {
+            if(Mod.GetNetworkManager().GetPeer() == null)
+            {
+                UpdateSocialLog.LogAdd("No connection to the Global Chat Server. Couldn't send message.");
+                return;
+            }
+            var data = new PackageData
+            {
+                SenderName = steamUsername,
+                Type = PackageData.PackageType.Information,
+                Info = PackageData.InformationType.PlayerRareItem,
+                ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
+                ModHash = Mod.GetModHash(),
+                SteamId = SteamUser.GetSteamID().ToString(),
+                Message = item.ItemName
+            };
+            SendPackage(Mod.GetNetworkManager().GetPeer(), data);
+        }
     }
 }

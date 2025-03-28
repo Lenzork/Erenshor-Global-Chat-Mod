@@ -20,7 +20,7 @@ namespace Erenshor_Global_Chat_Mod
                     UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (writeIntoGlobalByDefault ? "enabled" : "disabled") + "</color>");
 
                     // Reset Player UI
-                    resetPlayerUI(__instance);
+                    ResetPlayerUI(__instance);
                     return false;
                 }
                 else if (text[0] == '@')
@@ -29,20 +29,20 @@ namespace Erenshor_Global_Chat_Mod
                     MessageSender.SendChatMessage(message, Mod.GetSteamUsername());
 
                     // Reset Player UI
-                    resetPlayerUI(__instance);
+                    ResetPlayerUI(__instance);
                     return false;
                 } else if (text.Contains("/@online"))
                 {
                     MessageSender.SendRequestForOnlinePlayers(Mod.GetSteamUsername());
 
                     // Reset Player UI
-                    resetPlayerUI(__instance);
+                    ResetPlayerUI(__instance);
                     return false;
                 } else if (text.StartsWith("/@connect")) {
                     Mod.GetNetworkManager().ConnectToGlobalServer();
 
                     // Reset Player UI
-                    resetPlayerUI(__instance);
+                    ResetPlayerUI(__instance);
                     return false;
                 } else if (writeIntoGlobalByDefault)
                 {
@@ -50,13 +50,13 @@ namespace Erenshor_Global_Chat_Mod
                     MessageSender.SendChatMessage(message, Mod.GetSteamUsername());
 
                     // Reset Player UI
-                    resetPlayerUI(__instance);
+                    ResetPlayerUI(__instance);
                     return false;
                 }
                 return true;
             }
 
-            private static void resetPlayerUI(TypeText __instance)
+            private static void ResetPlayerUI(TypeText __instance)
             {
                 // Reset Player UI
                 __instance.typed.text = "";

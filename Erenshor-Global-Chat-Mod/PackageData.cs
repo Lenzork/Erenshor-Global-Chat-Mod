@@ -15,7 +15,9 @@
             VersionMismatch,
             PlayersOnline,
             BlacklistedMessage,
-            MessageOfTheDay
+            MessageOfTheDay,
+            PlayerMilestone,
+            PlayerRareItem,
         }
 
         public PackageType Type;

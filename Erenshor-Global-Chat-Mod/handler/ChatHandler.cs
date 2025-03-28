@@ -35,6 +35,12 @@ namespace Erenshor_Global_Chat_Mod
                 case PackageData.InformationType.MessageOfTheDay:
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.Message}</color>");
                     break;
+                case PackageData.InformationType.PlayerMilestone:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} reached level <color=orange>{data.Message}</color>!</color>");
+                    break;
+                case PackageData.InformationType.PlayerRareItem:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=yellow>{data.SenderName} found a rare item: <color=orange>{data.Message}</color>!</color>");
+                    break;
             }
         }
     }
