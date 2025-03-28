@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Erenshor_Global_Chat_Mod
+﻿namespace Erenshor_Global_Chat_Mod
 {
     public struct PackageData
     {

@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using BepInEx;
 using BepInEx.Bootstrap;
 using UnityEngine;
-using System.Collections;
 using Steamworks;
 
 namespace Erenshor_Global_Chat_Mod

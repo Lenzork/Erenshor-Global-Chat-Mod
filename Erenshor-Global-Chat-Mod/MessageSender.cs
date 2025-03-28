@@ -1,8 +1,6 @@
 using LiteNetLib;
 using Newtonsoft.Json;
-using BepInEx.Logging;
 using LiteNetLib.Utils;
-using BepInEx;
 using BepInEx.Bootstrap;
 using Steamworks;
 

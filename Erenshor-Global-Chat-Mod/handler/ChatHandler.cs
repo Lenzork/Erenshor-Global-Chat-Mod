@@ -1,5 +1,3 @@
-using BepInEx.Logging;
-
 namespace Erenshor_Global_Chat_Mod
 {
     public static class ChatHandler
