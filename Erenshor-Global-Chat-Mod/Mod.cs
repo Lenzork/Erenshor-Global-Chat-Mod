@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Erenshor_Global_Chat_Mod
 {
-    [BepInPlugin("org.lenzork.globalchatmod", "Erenshor Global Chat Mod", "1.2.0")]
+    [BepInPlugin("org.lenzork.globalchatmod", "Erenshor Global Chat Mod", "1.3.0")]
     public class Mod : BaseUnityPlugin
     {
         private static NetworkManager _networkManager;
