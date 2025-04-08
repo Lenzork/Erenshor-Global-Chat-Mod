@@ -20,13 +20,13 @@ namespace Erenshor_Global_Chat_Mod
         {
             if (Mod.GetNetworkManager().GetPeer() == null)
             {
-                UpdateSocialLog.LogAdd("No connection to the Global Chat Server. Couldn't send message.");
+                Mod.SendChatLogMessage("No connection to the Global Chat Server. Couldn't send message.");
                 return;
             }
 
             if (message.Length > 255)
             {
-                UpdateSocialLog.LogAdd("Message is too long. Couldn't send message.");
+                Mod.SendChatLogMessage("Message is too long. Couldn't send message.");
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace Erenshor_Global_Chat_Mod
         {
             if (Mod.GetNetworkManager().GetPeer() == null)
             {
-                UpdateSocialLog.LogAdd("No connection to the Global Chat Server. Couldn't send message.");
+                Mod.SendChatLogMessage("No connection to the Global Chat Server. Couldn't send message.");
                 return;
             }
 

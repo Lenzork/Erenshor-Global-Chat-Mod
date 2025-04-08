@@ -102,5 +102,16 @@ namespace Erenshor_Global_Chat_Mod
 
             _networkManager.SendDisconnectedPackage();
         }
+
+        public static void SendChatLogMessage(string message)
+        {
+            if (_networkManager == null) return;
+            UpdateSocialLog.LocalLogAdd(message);
+
+            if(ConfigGenerator._enablePrintInGlobalChat.Value)
+            {
+                UpdateSocialLog.LogAdd(message);
+            }
+        }
     }
 }

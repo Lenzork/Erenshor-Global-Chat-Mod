@@ -17,7 +17,7 @@ namespace Erenshor_Global_Chat_Mod
                 if (text.Contains("@@"))
                 {
                     writeIntoGlobalByDefault = !writeIntoGlobalByDefault;
-                    UpdateSocialLog.LogAdd("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (writeIntoGlobalByDefault ? "enabled" : "disabled") + "</color>");
+                    Mod.SendChatLogMessage("<color=purple>[GLOBAL]</color> <color=yellow>Chatting in global chat by default is now " + (writeIntoGlobalByDefault ? "enabled" : "disabled") + "</color>");
 
                     // Reset Player UI
                     resetPlayerUI(__instance);
