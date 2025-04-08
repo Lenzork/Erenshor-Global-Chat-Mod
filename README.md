@@ -3,37 +3,62 @@
 </p>
 
 # Erenshor Global Chat Mod
-This mod adds a global Chat to the game in which (real) players can communicate with each other. Adding a little bit of a "Multiplayer" Experience
+This mod adds a global chat to Erenshor where (real) players can communicate with each other — adding a little bit of a multiplayer feeling to your solo adventure!
 
 # Requirements
-You need BepInEx 5
+You need **BepInEx 5** installed in your Erenshor game folder.
 
-## Usage
-The usage is pretty easy and straight forward. As soon as you enter the world with your character a connection to the global chat server will be established and you are ready to chat! No need to do anything yourself.
+# Features
+- Global chat connection as soon as you enter the game world
+- Use your Steam name as display name
+- Toggle chat mode to type freely without prefixes
+- Check online players with `/@online`
+
+# Usage
+As soon as you enter the world with your character, a connection to the global chat server will be established automatically. No setup needed!
 
 > [!NOTE]
-> **Currently your steam name will be used when using this mod**
+> **Your Steam name will be used when chatting.**
 
-You can type in the chat like this:
+### Send a message
+Just type in the chat:
 ```
 @This is a message
 ```
 
-or look at the screenshot below
+### Toggle chat mode
+Type:
+```
+@@
+```
+This will let you chat freely in the global chat without using `@` at the start of each message.
+
+### See who’s online
+Type:
+```
+/@online
+```
+
+See the screenshot for an example:
 
 ![Screenshot 2024-11-16 214043](https://github.com/user-attachments/assets/642f982e-3a3b-41a5-a3b9-0d63f700d22e)
 
-- If you type ``@@`` in chat it will toggle your chatmode, making you able to chat the whole time in the global chat without adding ``@`` infront
-- If you type ``/@online`` in chat you will see every player that is currently online in the global chat.
+# Installation
 
-## Made with BepInEx
-The Development for this Mod has been made with BepInEx which is also required to use this mod.
-## How to Install
-1. [Install BepInEx](https://docs.bepinex.dev/articles/user_guide/installation/index.html) 
-2. Download the latest .zip of the Mod in the [releases](https://github.com/Lenzork/Erenshor-Achievement-Mod/releases)
-3. Extract all Files that are in the Zip Folder into your Erenshor Folder.
-4. Start the Game and Enjoy!
+1. [Install BepInEx 5](https://docs.bepinex.dev/articles/user_guide/installation/index.html)
+2. Download the latest mod `.zip` from the [Releases](https://github.com/Lenzork/Erenshor-Global-Chat-Mod/releases)
+3. Extract all files from the zip into your Erenshor folder.
+4. Launch the game and enjoy!
 
 > [!TIP]
-> To ensure that the Installation has been done right. Check if the Newtonsoft.Json.dll & LiteNetLib.dll is located where your Erenshor.exe is located at.
-> Also check if the Mods folder has the Erenshor-Global-Chat-Mod.dll in it.
+> To verify correct installation:
+> - Make sure `Newtonsoft.Json.dll` & `LiteNetLib.dll` are next to your `Erenshor.exe`.
+> - Check that the `Erenshor-Global-Chat-Mod.dll` is inside the `BepInEx/plugins/` folder.
+
+# Is there an official Server?
+If you want to help with testing out the Mod on the **official Server provided by me** please have a look on [How to connect to the Global Chat Test Server](https://github.com/Lenzork/Erenshor-Global-Chat-Mod/wiki/How-to-connect-to-the-Test-Server)
+
+# Support the Project ❤️
+If you enjoy this mod and want to support its development (and future Erenshor mods!), consider becoming a Patron:  
+
+[![Patreon](https://img.shields.io/badge/Support%20on-Patreon-F96854?logo=patreon&style=for-the-badge)](https://patreon.com/lenzorkserenshormods)
