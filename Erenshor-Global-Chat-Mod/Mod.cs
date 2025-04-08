@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Erenshor_Global_Chat_Mod
 {
-    [BepInPlugin("org.lenzork.globalchatmod", "Erenshor Global Chat Mod", "1.3.0")]
+    [BepInPlugin("org.lenzork.globalchatmod", "Erenshor Global Chat Mod", "1.3.1")]
     public class Mod : BaseUnityPlugin
     {
         private static NetworkManager _networkManager;
@@ -101,6 +101,17 @@ namespace Erenshor_Global_Chat_Mod
             if (_networkManager == null) return;
 
             _networkManager.SendDisconnectedPackage();
+        }
+
+        public static void SendChatLogMessage(string message)
+        {
+            if (_networkManager == null) return;
+            UpdateSocialLog.LocalLogAdd(message);
+
+            if(ConfigGenerator._enablePrintInGlobalChat.Value)
+            {
+                UpdateSocialLog.LogAdd(message);
+            }
         }
     }
 }
