@@ -55,6 +55,10 @@ See the screenshot for an example:
 > - Make sure `Newtonsoft.Json.dll` & `LiteNetLib.dll` are next to your `Erenshor.exe`.
 > - Check that the `Erenshor-Global-Chat-Mod.dll` is inside the `BepInEx/plugins/` folder.
 
+# Is there an official Server?
+If you want to help with testing out the Mod on the **official Server provided by me** please have a look on [How to connect to the Global Chat Test Server](https://github.com/Lenzork/Erenshor-Global-Chat-Mod/wiki/How-to-connect-to-the-Test-Server)
+
 # Support the Project ❤️
 If you enjoy this mod and want to support its development (and future Erenshor mods!), consider becoming a Patron:  
+
 [![Patreon](https://img.shields.io/badge/Support%20on-Patreon-F96854?logo=patreon&style=for-the-badge)](https://patreon.com/lenzorkserenshormods)
