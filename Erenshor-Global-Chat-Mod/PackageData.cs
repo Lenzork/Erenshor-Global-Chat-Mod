@@ -15,7 +15,8 @@
             VersionMismatch,
             PlayersOnline,
             BlacklistedMessage,
-            MessageOfTheDay
+            MessageOfTheDay,
+            KickPlayer
         }
 
         public PackageType Type;
