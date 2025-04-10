@@ -38,6 +38,12 @@ namespace Erenshor_Global_Chat_Mod
                 case PackageData.InformationType.KickPlayer:
                     UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=red>{data.Message}</color>");
                     break;
+                case PackageData.InformationType.BanPlayer:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=green>{data.Message}</color>");
+                    break;
+                case PackageData.InformationType.UnbanPlayer:
+                    UpdateSocialLog.LogAdd($"<color=purple>[GLOBAL]</color> <color=green>{data.Message}</color>");
+                    break;
             }
         }
     }
