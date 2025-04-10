@@ -99,8 +99,8 @@ namespace Erenshor_Global_Chat_Mod
             {
                 try
                 {
-                    int peerId = int.Parse(__instance.typed.text.Substring(8));
-                    MessageSender.SendRequestToUnbanPlayer(peerId);
+                    string steamId = __instance.typed.text.Substring(8);
+                    MessageSender.SendRequestToUnbanPlayer(steamId);
                 }
                 catch (FormatException)
                 {
