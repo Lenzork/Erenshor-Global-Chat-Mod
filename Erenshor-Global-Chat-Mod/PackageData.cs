@@ -15,13 +15,17 @@
             VersionMismatch,
             PlayersOnline,
             BlacklistedMessage,
-            MessageOfTheDay
+            MessageOfTheDay,
+            KickPlayer,
+            BanPlayer,
+            UnbanPlayer
         }
 
         public PackageType Type;
         public InformationType Info;
         public string SenderName;
         public string Message;
+        public int Duration;
         public string ModVersion;
         public string ModHash;
         public string SteamId;
