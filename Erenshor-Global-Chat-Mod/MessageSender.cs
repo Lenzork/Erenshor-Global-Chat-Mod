@@ -127,7 +127,7 @@ namespace Erenshor_Global_Chat_Mod
             SendPackage(Mod.GetNetworkManager().GetPeer(), data);
         }
 
-        public static void SendRequestToUnbanPlayer(int peerId)
+        public static void SendRequestToUnbanPlayer(string steamId)
         {
             if (Mod.GetNetworkManager().GetPeer() == null)
             {
@@ -140,7 +140,7 @@ namespace Erenshor_Global_Chat_Mod
                 SenderName = Mod.GetSteamUsername(),
                 Type = PackageData.PackageType.Information,
                 Info = PackageData.InformationType.UnbanPlayer,
-                Message = peerId.ToString(),
+                Message = steamId,
                 ModVersion = Chainloader.PluginInfos["org.lenzork.globalchatmod"].Metadata.Version.ToString(),
                 ModHash = Mod.GetModHash(),
                 SteamId = SteamUser.GetSteamID().ToString()
