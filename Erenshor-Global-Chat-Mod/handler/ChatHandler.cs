@@ -4,6 +4,8 @@ namespace Erenshor_Global_Chat_Mod
     {
         public static void HandleReceivedData(PackageData data)
         {
+            if (IsSenderIgnored(data.SteamId)) return;
+
             if(data.Type == PackageData.PackageType.ChatMessage) {
                 Mod.SendChatLogMessage($"<color=purple>[GLOBAL]</color> {data.SenderName}: {data.Message}");
             }
@@ -36,6 +38,16 @@ namespace Erenshor_Global_Chat_Mod
                     Mod.SendChatLogMessage($"<color=purple>[GLOBAL]</color> <color=yellow>{data.Message}</color>");
                     break;
             }
+        }
+
+        private static bool IsSenderIgnored(string steamId)
+        {
+            if(ConfigGenerator._ignoredPlayers.Value.Contains(steamId))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
