@@ -15,7 +15,6 @@ namespace Erenshor_Global_Chat_Mod
     {
         private static NetworkManager _networkManager;
         private static string steamUsername;
-        private bool wrongVersion = false;
         private bool steamChecked = false;
 
         public void Awake()
@@ -86,7 +85,7 @@ namespace Erenshor_Global_Chat_Mod
                 steamChecked = true;
             }
 
-            if (SceneValidator.IsValidScene(next.name) && !_networkManager.IsConnected && !wrongVersion)
+            if (SceneValidator.IsValidScene(next.name) && !_networkManager.IsConnected)
             {
                 _networkManager.ConnectToGlobalServer();
             }
