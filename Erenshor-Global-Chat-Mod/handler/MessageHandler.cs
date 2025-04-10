@@ -17,7 +17,9 @@ namespace Erenshor_Global_Chat_Mod
                     { text => text.StartsWith("@"), HandleSendGlobalMessage },
                     { text => text.Contains("/@online"), HandleRequestOnlinePlayers },
                     { text => text.StartsWith("/@connect"), HandleConnectToServer },
-                    { text => text.StartsWith("/@kick"), HandleKickPlayer }
+                    { text => text.StartsWith("/@kick"), HandleKickPlayer },
+                    { text => text.StartsWith("/@ban"), HandleBanPlayer },
+                    { text => text.StartsWith("/@unban"), HandleUnbanPlayer }
                 };
 
             [HarmonyPrefix]
@@ -73,6 +75,32 @@ namespace Erenshor_Global_Chat_Mod
                 {
                     int peerId = int.Parse(__instance.typed.text.Substring(7));
                     MessageSender.SendRequestToKickPlayer(peerId);
+                }
+                catch (FormatException)
+                {
+                    Mod.SendChatLogMessage("<color=purple>[GLOBAL]</color> <color=red>Invalid player ID format. Please use a valid number.</color>");
+                }
+            }
+
+            private static void HandleBanPlayer(TypeText __instance)
+            {
+                try
+                {
+                    int peerId = int.Parse(__instance.typed.text.Substring(6));
+                    MessageSender.SendRequestToBanPlayer(peerId);
+                }
+                catch (FormatException)
+                {
+                    Mod.SendChatLogMessage("<color=purple>[GLOBAL]</color> <color=red>Invalid player ID format. Please use a valid number.</color>");
+                }
+            }
+
+            private static void HandleUnbanPlayer(TypeText __instance)
+            {
+                try
+                {
+                    int peerId = int.Parse(__instance.typed.text.Substring(8));
+                    MessageSender.SendRequestToUnbanPlayer(peerId);
                 }
                 catch (FormatException)
                 {
