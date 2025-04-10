@@ -30,7 +30,7 @@ namespace Erenshor_Global_Chat_Mod
                     if (handler.Key(text))
                     {
                         handler.Value(__instance);
-                        resetPlayerUI(__instance);
+                        ResetPlayerUI(__instance);
                         return false;
                     }
                 }
@@ -38,7 +38,7 @@ namespace Erenshor_Global_Chat_Mod
                 if (writeIntoGlobalByDefault)
                 {
                     HandleSendGlobalMessage(__instance);
-                    resetPlayerUI(__instance);
+                    ResetPlayerUI(__instance);
                     return false;
                 }
 
@@ -80,7 +80,7 @@ namespace Erenshor_Global_Chat_Mod
                 }
             }
 
-            private static void resetPlayerUI(TypeText __instance)
+            private static void ResetPlayerUI(TypeText __instance)
             {
                 __instance.typed.text = "";
                 __instance.CDFrames = 10f;
