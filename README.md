@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2382520/header.jpg?t=1719971377" />
+  <img src="https://github.com/user-attachments/assets/ad64bac3-b02d-42b2-95bc-35c974ecdaa5" width="45%"/>
 </p>
 
 # Erenshor Global Chat Mod
