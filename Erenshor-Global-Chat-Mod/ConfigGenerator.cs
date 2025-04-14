@@ -12,7 +12,7 @@ namespace Erenshor_Global_Chat_Mod
 
         public static void GenerateConfig(BaseUnityPlugin baseUnityPlugin)
         {
-            _serverIp = baseUnityPlugin.Config.Bind("Connection", "ServerIP", "127.0.0.1", "The IP of the Global Chat Server.");
+            _serverIp = baseUnityPlugin.Config.Bind("Connection", "ServerIP", "45.131.109.73", "The IP of the Global Chat Server.");
             _serverPort = baseUnityPlugin.Config.Bind("Connection", "ServerPort", 9050, "The port of the Global Chat Server.");
             _enablePrintInGlobalChat = baseUnityPlugin.Config.Bind("Preferences", "EnablePrintInGlobalChat", false, "Will also print all Messages of the mod into the games Global Chat Tab and not only the local Chat Tab.");
         }
