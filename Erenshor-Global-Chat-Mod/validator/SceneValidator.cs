@@ -1,50 +1,19 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Erenshor_Global_Chat_Mod
 {
     static class SceneValidator
     {
-        public static string[] ValidScenes = new string[]
+        public static string[] InvalidScenes = new string[]
         {
-            "Stowaway",
-            "Brake",
-            "Bonepits",
-            "Vitheo",
-            "Krakengard",
-            "FernallaField",
-            "SaltedStrand",
-            "Elderstone",
-            "Azure",
-            "Rottenfoot",
-            "Braxonian",
-            "Silkengrass",
-            "Underspine",
-            "Loomingwood",
-            "Duskenlight",
-            "Windwashed",
-            "Blight",
-            "Malaroth",
-            "Braxonia",
-            "Soluna",
-            "Ripper",
-            "RipperPortal",
-            "PrielPlateau",
-            "ShiveringStep",
-            "Tutorial",
-            "Abyssal",
-            "VitheosEnd",
-            "Azynthi",
-            "AzynthiClear",
-            "DuskenPortal",
-            "Rockshade",
-            "ShiveringTomb",
-            "Undercity",
-            "Jaws"
+            "Menu",
+            "LoadScene",
         };
 
         public static bool IsValidScene(string sceneName)
         {
-            return ValidScenes.Contains(sceneName);
+            return !InvalidScenes.Contains(sceneName, StringComparer.OrdinalIgnoreCase);
         }
     }
 }
